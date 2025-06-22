@@ -21,18 +21,18 @@ async def set_commands(bot: Bot, user_id: int):
 
     if user_id in ADMINS:
         await bot.set_my_commands(
-            commmands=admin_cmds,
-            scope=types.BotCommandScopeChat(user_id)
+            commands=admin_cmds,
+            scope=types.BotCommandScopeChat(chat_id=user_id)
         )
     elif user_id in FOREMANS:
         await bot.set_my_commands(
             commands=foreman_cmds,
-            scope=types.BotCommandScopeChat(user_id)
+            scope=types.BotCommandScopeChat(chat_id=user_id)
         )
     else:
         await bot.set_my_commands(
             commands=simple_user_cmds,
-            scope=types.BotCommandScopeChat(user_id)
+            scope=types.BotCommandScopeChat(chat_id=user_id)
         )
 
 default_commands = [
