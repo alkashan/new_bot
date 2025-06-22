@@ -1,14 +1,16 @@
 import os
 import asyncio
 import logging
+
 from aiogram import Bot, Dispatcher, types
-from aiogram.filters import CommandStart, Command
+from aiogram.filters import CommandStart
 from dotenv import load_dotenv, find_dotenv
-from bot_cmds import set_commands, default_commands
+
+from common.bot_cmds import set_commands
 from users.admin import admin_router
 from users.foreman import foreman_router
 from users.simple_user import simple_user_router
-from users_list import ADMINS, FOREMANS
+from common.users_list import ADMINS, FOREMANS
 
 logging.basicConfig(filename='app.log', level=logging.INFO)
 

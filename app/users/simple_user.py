@@ -1,9 +1,8 @@
 from aiogram import Router, types
 from aiogram.filters import Command
 
-from users_list import FOREMANS
-# from app.rights_system import is_admin
-from bot_cmds import set_commands
+from common.users_list import FOREMANS
+from common.bot_cmds import set_commands
 
 simple_user_router = Router()
 

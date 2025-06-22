@@ -1,6 +1,7 @@
 from aiogram.types import BotCommand
 from aiogram import Bot, types
-from users_list import ADMINS, FOREMANS
+
+from common.users_list import ADMINS, FOREMANS
 
 async def set_commands(bot: Bot, user_id: int):
     admin_cmds = [

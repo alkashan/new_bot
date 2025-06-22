@@ -1,8 +1,6 @@
 from aiogram import Router, types
 from aiogram.filters import Command
 
-# from app.rights_system import is_admin
-
 admin_router = Router()
 
 @admin_router.message(Command('newobject'))

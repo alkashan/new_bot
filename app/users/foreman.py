@@ -1,8 +1,6 @@
 from aiogram import Router, types
 from aiogram.filters import Command
 
-# from rights_system import is_foreman
-
 foreman_router = Router()
 
 @foreman_router.message(Command('getobjects'))
