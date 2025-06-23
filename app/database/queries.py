@@ -1,4 +1,4 @@
-from sqlalchemy import text
+from sqlalchemy import text, select
 
 from .database import Base, engine, session_maker
 from .models import User, Rights
@@ -26,3 +26,27 @@ class ORM:
             )
             session.add(user)
             await session.commit()
+
+    @staticmethod
+    async def create_foreman(username: str):
+        async with session_maker() as session:
+            user = await session.scalar(
+                select(User).where(User.username==username)
+            )
+            if user:
+                user.access_level = Rights.FOREMAN
+                await session.commit()
+                return True
+            return False
+    
+    @staticmethod
+    async def delete_foreman(username: str):
+        async with session_maker() as session:
+            user = await session.scalar(
+                select(User).where(User.username==username)
+            )
+            if user:
+                user.access_level = Rights.SIMPLEUSER
+                await session.commit()
+                return True
+            return False

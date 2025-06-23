@@ -32,7 +32,7 @@ dp.include_routers(*ROUTERS)
 @dp.message(CommandStart())
 async def cmd_start(message: types.Message):
     user_id = message.from_user.id
-    username = message.from_user.username
+    username = f'@{message.from_user.username}'
 
     if message.from_user.id in ADMINS:
         await set_commands(bot, user_id)
