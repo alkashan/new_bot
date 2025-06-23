@@ -1,3 +1,5 @@
+from sqlalchemy import text
+
 from .database import Base, engine, session_maker
 from .models import User, Rights
 
@@ -12,6 +14,7 @@ class ORM:
     async def drop_tables():
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.drop_all)
+            await conn.execute(text("DROP TYPE IF EXISTS rights CASCADE"))
 
     @staticmethod
     async def add_user(user_id: int, username: str):

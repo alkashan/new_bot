@@ -38,12 +38,12 @@ async def cmd_start(message: types.Message):
         await set_commands(bot, user_id)
         await message.answer('Вы админ')
     elif user_id not in FOREMANS:
-        await ORM.add_user(user_id, )
+        await ORM.add_user(user_id, username)
         await set_commands(bot, user_id)
         await message.answer('Вы занесены в список обычных пользователей.\nВыполните команду /update после того как админ выдаст вам права')
 
 async def main():
-    await ORM.drop_tables()
+    # await ORM.drop_tables()
     await ORM.create_tables()
     await bot.delete_webhook(drop_pending_updates=True)
     # await bot.set_my_commands(commands=default_commands, scope=types.BotCommandScopeAllPrivateChats())
