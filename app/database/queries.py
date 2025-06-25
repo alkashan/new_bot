@@ -18,6 +18,7 @@ class ORM:
 
     @staticmethod
     async def add_user(user_id: int, username: str):
+        """Срабатывает во время команды старт"""
         async with session_maker() as session:
             user = User(
                 tg_id=user_id,
@@ -29,6 +30,7 @@ class ORM:
 
     @staticmethod
     async def create_foreman(username: str):
+        """Выдает права бригадира и возвращает True если пользователь был найден"""
         async with session_maker() as session:
             user = await session.scalar(
                 select(User).where(User.username==username)
@@ -48,5 +50,24 @@ class ORM:
             if user:
                 user.access_level = Rights.SIMPLEUSER
                 await session.commit()
+                return True
+            return False
+    
+    @staticmethod
+    async def get_foremans():
+        async with session_maker() as session:
+            result = await session.scalars(
+                select(User).where(User.access_level==Rights.FOREMAN)
+            )
+            await session.commit()
+            return result.all()
+    
+    @staticmethod
+    async def update_info(tg_id: int):
+        async with session_maker() as session:
+            user = await session.scalar(
+                select(User).where(User.tg_id==tg_id)
+            )
+            if user.access_level == Rights.FOREMAN:
                 return True
             return False

@@ -60,7 +60,14 @@ async def cmd_del_foreman_two(message: types.Message, state: FSMContext):
 
 @admin_router.message(Command('getforemans'))
 async def cmd_get_foremans(message: types.Message):
-    await message.answer('Список бригадиров:')
+    foremans = await ORM.get_foremans()
+    if foremans:
+        foremans_list = 'Список бригадиров\n'
+        for foreman in foremans:
+            foremans_list += f'{foreman.username}\n'
+        await message.answer(foremans_list)
+    else:
+        await message.answer('Вы пока еще не добавили ни одного бригадира')
 
 @admin_router.message(Command('getobjects'))
 async def cmd_get_objects_admin(message: types.Message):
@@ -68,5 +75,3 @@ async def cmd_get_objects_admin(message: types.Message):
         'Список объектов:',
         reply_markup=None
     )
-
-# Для команд

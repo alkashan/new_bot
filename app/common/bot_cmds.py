@@ -1,7 +1,8 @@
 from aiogram.types import BotCommand
 from aiogram import Bot, types
 
-from common.users_list import ADMINS, FOREMANS
+from common.users_list import ADMINS
+from database.queries import ORM
 
 async def set_commands(bot: Bot, user_id: int):
     admin_cmds = [
@@ -19,13 +20,14 @@ async def set_commands(bot: Bot, user_id: int):
     simple_user_cmds = [
         BotCommand(command='update', description='Обновить права'),
     ]
+    is_foreman = await ORM.update_info(user_id)
 
     if user_id in ADMINS:
         await bot.set_my_commands(
             commands=admin_cmds,
             scope=types.BotCommandScopeChat(chat_id=user_id)
         )
-    elif user_id in FOREMANS:
+    elif is_foreman:
         await bot.set_my_commands(
             commands=foreman_cmds,
             scope=types.BotCommandScopeChat(chat_id=user_id)
